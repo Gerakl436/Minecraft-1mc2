@@ -5,6 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Сервер 1mc2 — PvP, выживание, рейды</title>
     <style>
+        .contacts-btn {
+    background: #8b0000;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contacts-btn:hover {
+    background: #a00000;
+}
+
+.contacts-btn[aria-expanded="true"] {
+    background: #660000;
+}
+
+.contacts-list {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.4s ease-in-out;
+}
+
+.contacts-list[aria-hidden="false"] {
+    max-height: 300px;
+    opacity: 1;
+    padding: 20px 0;
+}
+
+/* Анимация появления элементов списка */
+.contacts-list ul li {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.contacts-list[aria-hidden="false"] ul li {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Последовательная анимация для пунктов списка */
+.contacts-list[aria-hidden="false"] ul li:nth-child(1) {
+    transition-delay: 0.1s;
+}
+.contacts-list[aria-hidden="false"] ul li:nth-child(2) {
+    transition-delay: 0.2s;
+}
+.contacts-list[aria-hidden="false"] ul li:nth-child(3) {
+    transition-delay: 0.3s;
+}
+.contacts-list[aria-hidden="false"] ul li:nth-child(4) {
+    transition-delay: 0.4s;
+}
         * {
             margin: 0;
             padding: 0;
@@ -17,11 +74,26 @@
             background-color: #f4f4f4;
         }
         header {
-            background: #8b0000; /* Тёмно‑красный цвет для PvP‑тематики */
-            color: white;
-            text-align: center;
-            padding: 1rem;
-        }
+    background: #8b0000;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.header-content {
+    transform: translateY(-100%);
+    opacity: 0;
+    animation: slideDown 1s ease-out forwards;
+}
+
+@keyframes slideDown {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
         nav {
             background: #660000;
             padding: 0.5rem;
@@ -65,9 +137,34 @@
     </style>
 </head>
 <body>
-    <header>
-        <h1>Сервер 1mc2</h1>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const button = document.querySelector('.contacts-btn');
+    const contactsList = document.querySelector('.contacts-list');
+
+    button.addEventListener('click', function() {
+        const isExpanded = button.getAttribute('aria-expanded') === 'true';
+        
+        // Меняем состояние кнопки
+        button.setAttribute('aria-expanded', !isExpanded);
+        
+        // Меняем видимость списка
+        contactsList.setAttribute('aria-hidden', isExpanded);
+        
+        // Обновляем текст кнопки
+        if (isExpanded) {
+            button.textContent = 'Показать контакты';
+        } else {
+            button.textContent = 'Скрыть контакты';
+        }
+    });
+});
+</script>
+
+    <header><div class="header-content">
+        <h1>Сервер LegendPvP</h1>
         <p>PvP, выживание, рейды, экономика — 24/7 без лагов!</p>
+        </div>
     </header>
     <nav>
         <div class="container">
@@ -79,8 +176,8 @@
     </nav>
     <div class="container">
         <section id="about">
-            <h2>О сервере 1mc2</h2>
-            <p>1mc2 — это хардкорный PvP‑сервер с элементами выживания и рейдов. Здесь вы можете:</p>
+            <h2>О сервере LegendPvP</h2>
+            <p>LegendPvP — это хардкорный PvP‑сервер с элементами выживания и рейдов. Здесь вы можете:</p>
             <ul>
                 <li>Сражаться с другими игроками в открытом мире</li>
                 <li>Строить и защищать свою базу от рейдов</li>
@@ -118,15 +215,19 @@
             </ol>
         </section>
         <section id="contacts">
-            <h2>Контакты</h2>
-            <p>Если у вас есть вопросы или предложения, свяжитесь с нами:</p>
-            <ul>
-                <li><strong>Discord:</strong> discord.gg/1mc2</li>
-                <li><strong>Telegram:</strong> @legendpvp_bot</li>
-                <li><strong>Email:</strong> admin@1mc2.com</li>
-                <li><strong>Форум:</strong> forum.1mc2.com</li>
-            </ul>
-        </section>
+    <h2>Контакты</h2>
+    <button class="contacts-btn" aria-expanded="false">
+        Показать контакты
+    </button>
+    <div class="contacts-list" aria-hidden="true">
+        <ul>
+            <li><strong>Discord:</strong> <a href="https://discord.gg/legendpvp" target="_blank">discord.gg/legendpvp</a></li>
+            <li><strong>Telegram:</strong> <a href="https://t.me/legendpvp_bot" target="_blank">@legendpvp_bot</a></li>
+            <li><strong>Email:</strong> <a href="mailto:admin@legendpvp.com">admin@legendpvp.com</a></li>
+            <li><strong>Форум:</strong> <a href="https://forum.legendpvp.com" target="_blank">forum.legendpvp.com</a></li>
+        </ul>
+    </div>
+</section>
     </div>
     <footer>
         <p>&copy; 2026 Сервер 1mc2. Все права защищены.</p>
